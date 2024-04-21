@@ -13,5 +13,7 @@ func Start(port string) {
 		return c.JSON(http.StatusOK, map[string]string{"message": "echo pong"})
 	})
 
-	r.Logger.Fatal(r.Start(port))
+	if err := r.Start(port); err != nil {
+		r.Logger.Fatal(err)
+	}
 }

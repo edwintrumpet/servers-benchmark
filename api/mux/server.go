@@ -1,6 +1,7 @@
 package muxserver
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -15,5 +16,7 @@ func Start(port string) {
 		w.Write([]byte(`{"message": "mux pong"}`))
 	})
 
-	http.ListenAndServe(port, r)
+	if err := http.ListenAndServe(port, r); err != nil {
+		log.Fatal(err)
+	}
 }

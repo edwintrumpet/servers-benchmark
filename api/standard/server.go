@@ -1,6 +1,9 @@
 package standardserver
 
-import "net/http"
+import (
+	"log"
+	"net/http"
+)
 
 func Start(port string) {
 	r := http.NewServeMux()
@@ -11,5 +14,7 @@ func Start(port string) {
 		w.Write([]byte(`{"message": "standard pong"}`))
 	})
 
-	http.ListenAndServe(port, r)
+	if err := http.ListenAndServe(port, r); err != nil {
+		log.Fatal(err)
+	}
 }

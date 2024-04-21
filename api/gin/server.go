@@ -8,7 +8,11 @@ import (
 )
 
 func Start(port string) {
-	r := gin.Default()
+	r := gin.New()
+
+	r.Use(
+		gin.Recovery(),
+	)
 
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
@@ -16,5 +20,7 @@ func Start(port string) {
 		})
 	})
 
-	log.Fatal(r.Run(port))
+	if err := r.Run(port); err != nil {
+		log.Fatal(err)
+	}
 }
